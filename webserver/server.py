@@ -117,7 +117,8 @@ def teardown_request(exception):
 #
 @app.route('/')
 def index():
-  """
+  print "in index"
+    """
   request is a special object that Flask provides to access web request information:
 
   request.method:   "GET" or "POST"
