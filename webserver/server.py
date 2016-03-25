@@ -167,7 +167,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  #context = dict(data = names)
+  context = dict(data = names)
 
 
   #
@@ -175,7 +175,7 @@ def index():
   # for example, the below file reads template/index.html
   #
   #return render_template("index.html", **context)
-  return render_template("anotherfile.html")
+  return render_template("anotherfile.html", **context)
 
 #
 # This is an example of a different path.  You can see it at
