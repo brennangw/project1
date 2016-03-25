@@ -44,9 +44,7 @@ DATABASEURI = "postgresql://bgw2119:PGKWXN@w4111db.eastus.cloudapp.azure.com/bgw
 #
 # This line creates a database engine that knows how to connect to the URI above
 #
-print "before"
 engine = create_engine(DATABASEURI)
-print "after"
 
 
 #
@@ -86,9 +84,7 @@ def before_request():
   The variable g is globally accessible
   """
   try:
-    print "before g.conn"
     g.conn = engine.connect()
-    print "after g.conn"
   except:
     print "uh oh, problem connecting to database"
     import traceback; traceback.print_exc()
@@ -138,11 +134,11 @@ def index():
   #
   # example of a database query
   #
-  #cursor = g.conn.execute("SELECT name FROM test")
-  #names = []
-  #for result in cursor:
-  #   names.append(result['name'])  # can also be accessed using result[0]
-  # cursor.close()
+  cursor = g.conn.execute("SELECT url FROM webservice")
+  urls = []
+  for result in cursor:
+     urls.append(result['url'])  # can also be accessed using result[0]
+  cursor.close()
 
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
