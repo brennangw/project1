@@ -38,7 +38,7 @@ app = Flask(__name__, template_folder=tmpl_dir)
 #     DATABASEURI = "postgresql://ewu2493:foobar@w4111db.eastus.cloudapp.azure.com/ewu2493"
 #
 
-DATABASEURI = "postgresql://bgw2119:Wrdpss!1@w4111db.eastus.cloudapp.azure.com/bgw2119"
+DATABASEURI = "postgresql://bgw2119:PGKWXNw4111db.eastus.cloudapp.azure.com/bgw2119"
 
 
 #
@@ -229,8 +229,23 @@ def webservice():
 
 @app.route('/login')
 def login():
-    abort(401)
-    this_is_never_executed()
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != app.config['USERNAME']:
+            error = 'Invalid username'
+        elif request.form['password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('Logged in succesfully')
+            return redirect(url_for('index'))
+    return render_template('index.html', error=error)
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('Logged out succesfully')
+    return redirect(url_for('show_entries'))
 
 
 if __name__ == "__main__":
