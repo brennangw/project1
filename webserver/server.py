@@ -86,7 +86,9 @@ def before_request():
   The variable g is globally accessible
   """
   try:
+    print "before g.conn"
     g.conn = engine.connect()
+    print "after g.conn"
   except:
     print "uh oh, problem connecting to database"
     import traceback; traceback.print_exc()
@@ -197,6 +199,32 @@ def another():
 #   name = request.form['name']
 #   g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
 #   return redirect('/')
+
+@app.route('/webservice')
+def webservice():
+    print "webservice route, arguments: " + request.args
+    #webservice info
+    cursor = g.conn.execute("")
+    names = []
+    for result in cursor:
+        names.append(result['name'])  # can also be accessed using result[0]
+        cursor.close()
+    context = dict(data = names)
+    #comments
+    cursor = g.conn.execute("")
+    for result in cursor:
+        names.append(result['name'])
+        cursor.close()
+    context = dict(data = names)
+        #comments
+    cursor = g.conn.execute("")
+    for result in cursor:
+        names.append(result['name'])
+        cursor.close()
+    context = dict(data = names)
+    return render_template("webservice.html",**context)
+
+
 
 
 @app.route('/login')
