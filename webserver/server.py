@@ -136,7 +136,7 @@ def index():
   # example of a database query
   #
   print "before cursor"
-  cursor = g.conn.execute("SELECT url FROM webservice")
+  cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice")
   print "after cursor"
   urls = []
   for result in cursor:
