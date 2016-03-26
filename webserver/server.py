@@ -215,19 +215,17 @@ def webservice(webserviceurl):
     #     cursor.close()
     # context = dict(data = names)
     # #comments
-    comments = []
+    webservice_comments = []
     cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email", [webserviceurl])
     for result in cursor:
       print result['username']
       print result['suctextblob']
       print result['suctime']
-      temp = {'username': str(result['username']).strip(), 'suctextblob': str(result['suctextblob']).strip(), 'suctime': str(result['suctime'])}
-      print temp
-      print
-      print "bf"
+      temp = {'username': str(result['username']).strip(), 'text': str(result['suctextblob']).strip(), 'time': str(result['suctime'])}
+      webservice_comments.append(temp)
     cursor.close()
     print "comments"
-    print comments
+    print webservice_comments
     print "after comments"
     # context = dict(data = names)
     #     #comments
@@ -235,7 +233,7 @@ def webservice(webserviceurl):
     # for result in cursor:
     #     names.append(result['name'])
     #     cursor.close()
-    context = dict(name = service_name, url = webserviceurl)
+    context = dict(name = service_name, url = webserviceurl, comments = webservice_comments)
     return render_template("webservice.html", **context)
 
 
