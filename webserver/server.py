@@ -175,7 +175,7 @@ def index():
   # for example, the below file reads template/index.html
   #
   #return render_template("index.html", **context)
-  return render_template("index.html.html", **context)
+  return render_template("index.html", **context)
 
 #
 # This is an example of a different path.  You can see it at
