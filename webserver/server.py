@@ -220,6 +220,7 @@ def webservice(webserviceurl):
     for result in cursor:
       print result
       comments.append({text: result['suctextblob'], time: result['suctime']})
+      print "bf"
     cursor.close()
     print "comments"
     print comments
