@@ -206,7 +206,7 @@ def another():
 
 @app.route('/webservice')
 def webservice():
-    print "webservice route, arguments: " + request.args
+    print "webservice route, arguments: " #+ request.args
     #webservice info
     # cursor = g.conn.execute("")
     # names = []
