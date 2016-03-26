@@ -249,9 +249,12 @@ def login():
         elif request.form['password'] != "t":
             error = 'Invalid password'
         else:
+            print 'else'
             session['logged_in'] = True
+            print '1'
             flash('You were logged in')
-            return redirect('/')
+            print '2'
+            return redirect('index')
     return render_template('login.html', error=error)
 
 @app.route('/logout')
