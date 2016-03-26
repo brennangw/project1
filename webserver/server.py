@@ -20,10 +20,11 @@ from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, session, g, url_for, abort, render_template, g, redirect, Response, flash
 
+SECRET_KEY = 'development key'
+
+
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
-session(app)
-
 
 #
 # The following uses the sqlite3 database test.db -- you can use this for debugging purposes
