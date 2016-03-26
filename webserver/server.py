@@ -140,7 +140,7 @@ def index():
   print "after cursor"
   urls = []
   for result in cursor:
-    print "for result: " result
+    print "for result: " + result
     urls.append(result['url'])  # can also be accessed using result[0]
   cursor.close()
 
