@@ -215,10 +215,11 @@ def webservice(webserviceurl):
     #     cursor.close()
     # context = dict(data = names)
     # #comments
-    # cursor = g.conn.execute("")
-    # for result in cursor:
-    #     names.append(result['name'])
-    #     cursor.close()
+    comments = []
+    cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc WHERE suc.webserviceurl = %s ", [webserviceurl])
+    for result in cursor:
+         comments.append({text: result['suctextblob'], time: result['suctime'])
+         cursor.close()
     # context = dict(data = names)
     #     #comments
     # cursor = g.conn.execute("")
