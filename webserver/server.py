@@ -219,6 +219,8 @@ def webservice(webserviceurl):
     cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email", [webserviceurl])
     for result in cursor:
       print result['username']
+      print result['suctextblob']
+      print result['suctime']
       print "bf"
     cursor.close()
     print "comments"
