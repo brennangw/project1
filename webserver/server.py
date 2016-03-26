@@ -221,7 +221,7 @@ def webservice(webserviceurl):
       print result['username']
       print result['suctextblob']
       print result['suctime']
-      temp = {username: result['username'], suctextblob: result['suctextblob'], suctime: result['suctime']}
+      temp = {'username': result['username'], 'suctextblob': result['suctextblob'], 'suctime': result['suctime']}
       print temp
       print
       print "bf"
