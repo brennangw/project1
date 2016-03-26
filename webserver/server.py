@@ -207,10 +207,9 @@ def another():
 @app.route('/webservice/<webserviceurl>')
 def webservice(webserviceurl):
     print "webservice route for: " + webserviceurl
-    webservice info
-    cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice ws where ws.url = webserviceurl)
-    # names = []
-    # for result in cursor:
+    #webservice info
+    name = g.conn.execute("SELECT webserviceurl FROM public.webservice ws where ws.url = webserviceurl").first();
+    print name
     #     names.append(result['name'])  # can also be accessed using result[0]
     #     cursor.close()
     # context = dict(data = names)
