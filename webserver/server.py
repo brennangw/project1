@@ -225,7 +225,7 @@ def webservice(webserviceurl):
     # for result in cursor:
     #     names.append(result['name'])
     #     cursor.close()
-    context = dict(name = service_name)
+    context = dict(name = service_name, url = webserviceurl)
     return render_template("webservice.html", **context)
 
 
