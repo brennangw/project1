@@ -219,7 +219,6 @@ def webservice(webserviceurl):
     cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc WHERE suc.webserviceurl = %s ", [webserviceurl])
     for result in cursor:
       print result
-      comments.append({text: result[0], time: result[1]})
       print "bf"
     cursor.close()
     print "comments"
