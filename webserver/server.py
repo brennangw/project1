@@ -208,7 +208,8 @@ def another():
 def webservice(webserviceurl):
     print "webservice route for: " + webserviceurl
     #webservice info
-    temp_name = g.conn.execute("SELECT name FROM public.webservice ws WHERE ws.webserviceurl = ?", webserviceurl).first()
+    temp_name = g.conn.execute("SELECT name FROM public.webservice ws WHERE ws.webserviceurl = ?", webserviceurl).fetchone()
+
     #where ws.url = " + webserviceurl);
     print
     #temp_name_2 = temp_name.fetchone()
