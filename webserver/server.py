@@ -211,7 +211,7 @@ def webservice(webserviceurl):
     temp_name = g.conn.execute("SELECT name FROM public.webservice ws WHERE ws.webserviceurl = ?", webserviceurl)
 
     #where ws.url = " + webserviceurl);
-    print temp_name.fetchone()
+    print temp_name
     #temp_name_2 = temp_name.fetchone()
     #     names.append(result['name'])  # can also be accessed using result[0]
     #     cursor.close()
