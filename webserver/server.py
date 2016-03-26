@@ -209,7 +209,7 @@ def webservice(webserviceurl):
     print "webservice route for: " + webserviceurl
     #webservice info
     temp_name = g.conn.execute("SELECT name FROM public.webservice ws where ws.url = webserviceurl");
-    print name[0][0];
+    temp_name_2 = temp_name.fetchone()
     #     names.append(result['name'])  # can also be accessed using result[0]
     #     cursor.close()
     # context = dict(data = names)
