@@ -204,7 +204,7 @@ def another():
 #   g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
 #   return redirect('/')
 
-@app.route('/webservice/<service_url>')
+@app.route('/webservice')
 def webservice():
     print "webservice route, arguments: " + request.args
     #webservice info
