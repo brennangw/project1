@@ -208,8 +208,8 @@ def another():
 def webservice(webserviceurl):
     print "webservice route for: " + webserviceurl
     #webservice info
-    name = g.conn.first("SELECT webserviceurl FROM public.webservice ws where ws.url = webserviceurl");
-    print name
+    temp_name = g.conn.execute("SELECT name FROM public.webservice ws where ws.url = webserviceurl");
+    print name[0][0];
     #     names.append(result['name'])  # can also be accessed using result[0]
     #     cursor.close()
     # context = dict(data = names)
