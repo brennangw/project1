@@ -141,7 +141,6 @@ def index():
   print cursor
   urls = []
   for result in cursor:
-    print "for"
     print "for result: " + result['webserviceurl']
     urls.append(result['webserviceurl'])  # can also be accessed using result[0]
   cursor.close()
