@@ -141,6 +141,9 @@ def index():
      urls.append(result['url'])  # can also be accessed using result[0]
   cursor.close()
 
+  for url in urls:
+      print url
+
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
   # pass data to a template and dynamically generate HTML based on the data
