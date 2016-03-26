@@ -13,9 +13,11 @@
 
   <div>
     {% for comment in comments %}
+    <div>
     <div>{{comment.text}}</div>
     <div>{{comment.username}}</div>
     <div>{{comment.time}}</div>
+    </div>
     {% endfor %}
   </div>
 

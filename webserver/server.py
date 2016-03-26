@@ -136,7 +136,7 @@ def index():
   # example of a database query
   #
   print "before cursor"
-  cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice")
+  cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice AS ws ORDER BY ws.webserviceurl")
   print "after cursor"
   print cursor
   urls = []
@@ -216,7 +216,7 @@ def webservice(webserviceurl):
     # context = dict(data = names)
     # #comments
     webservice_comments = []
-    cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email", [webserviceurl])
+    cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email ORDER BY suc.suctime" , [webserviceurl])
     for result in cursor:
       print result['username']
       print result['suctextblob']
