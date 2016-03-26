@@ -239,7 +239,7 @@ def webservice(webserviceurl):
 
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -249,10 +249,9 @@ def login():
             error = 'Invalid password'
         else:
             session['logged_in'] = True
-            flash('Logged in succesfully')
-            return redirect(url_for('index'))
+            flash('You were logged in')
+            return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
-
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
