@@ -208,25 +208,25 @@ def another():
 def webservice():
     print "webservice route, arguments: " + request.args
     #webservice info
-    cursor = g.conn.execute("")
-    names = []
-    for result in cursor:
-        names.append(result['name'])  # can also be accessed using result[0]
-        cursor.close()
-    context = dict(data = names)
-    #comments
-    cursor = g.conn.execute("")
-    for result in cursor:
-        names.append(result['name'])
-        cursor.close()
-    context = dict(data = names)
-        #comments
-    cursor = g.conn.execute("")
-    for result in cursor:
-        names.append(result['name'])
-        cursor.close()
-    context = dict(data = names)
-    return render_template("webservice.html",**context)
+    # cursor = g.conn.execute("")
+    # names = []
+    # for result in cursor:
+    #     names.append(result['name'])  # can also be accessed using result[0]
+    #     cursor.close()
+    # context = dict(data = names)
+    # #comments
+    # cursor = g.conn.execute("")
+    # for result in cursor:
+    #     names.append(result['name'])
+    #     cursor.close()
+    # context = dict(data = names)
+    #     #comments
+    # cursor = g.conn.execute("")
+    # for result in cursor:
+    #     names.append(result['name'])
+    #     cursor.close()
+    # context = dict(data = names)
+    return render_template("anotherfile.html")
 
 
 
