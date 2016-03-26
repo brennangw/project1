@@ -221,7 +221,9 @@ def webservice(webserviceurl):
       print result
       comments.append({text: result['suctextblob'], time: result['suctime']})
     cursor.close()
+    print "comments"
     print comments
+    print "after comments"
     # context = dict(data = names)
     #     #comments
     # cursor = g.conn.execute("")
