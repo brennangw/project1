@@ -251,14 +251,14 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('index.html'))
+            return redirect(url_for('index'))
     return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash('Logged out succesfully')
-    return redirect(url_for('index.html'))
+    return redirect(url_for('index'))
 
 
 if __name__ == "__main__":
