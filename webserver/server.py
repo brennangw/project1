@@ -138,6 +138,7 @@ def index():
   print "before cursor"
   cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice")
   print "after cursor"
+  print cursor
   urls = []
   for result in cursor:
     print "for result: " + result
