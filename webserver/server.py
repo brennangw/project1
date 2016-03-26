@@ -248,7 +248,7 @@ def login():
         print "POST"
         if request.form['username'] != "t":
             error = 'Invalid username'
-        elif request.form['password'] != "t"
+        elif request.form['password'] != "t":
             error = 'Invalid password'
         else:
             print 'else'
