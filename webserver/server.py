@@ -209,8 +209,9 @@ def webservice(webserviceurl):
     print "webservice route for: " + webserviceurl
     #webservice info
     yahoo = webserviceurl
-    temp_name = g.conn.execute("SELECT name FROM public.webservice AS ws WHERE ws.webserviceurl = %s ", [yahoo]).fetchone()
-    print temp_name
+    temp_name = g.conn.execute("SELECT name FROM public.webservice AS ws WHERE ws.webserviceurl = %s ", [yahoo]) #.fetchone()
+    for each t in temp_name:
+        print t
 
     #where ws.url = " + webserviceurl);
     #temp_name_2 = temp_name.fetchone()
