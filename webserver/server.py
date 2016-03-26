@@ -251,7 +251,7 @@ def login():
             session['logged_in'] = True
             flash('Logged in succesfully')
             return redirect(url_for('index'))
-    return render_template('index.html', error=error)
+    return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
