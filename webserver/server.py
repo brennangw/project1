@@ -224,6 +224,8 @@ def report(webserviceurl):
     error = None
     if request.method == 'POST':
         print "post"
+        print "post2"
+        print request
         return redirect('/')
     context = dict(url = webserviceurl)
     return render_template("report.html", **context)
