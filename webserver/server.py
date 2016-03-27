@@ -247,7 +247,7 @@ def login():
         if (passwordHolder == None):
         #if request.form['username'] != "t":
             error = 'Invalid email'
-        elif request.form['password'] != passwordHolder:
+        elif str(request.form['password']) != str(passwordHolder[0]):
             print "request.form['password']"
             print request.form['password']
             print "passwordHolder"
