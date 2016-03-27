@@ -230,7 +230,7 @@ def report(webserviceurl):
     #     return redirect('/')
     context = dict(url = webserviceurl)
     print "report2"
-    return render_template('report.html', **context)
+    return render_template("report.html", **context)
 
 @app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
 def comment(webserviceurl):
