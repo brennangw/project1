@@ -234,9 +234,11 @@ def report(webserviceurl):
         now = str(datetime.utcnow())[0:19]
         print now
         g.db.execute('insert into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (?, ?, ?, ?)', [request.form['type'], request.form['url'], request.form['comment'], session['email'], now])
+        print "after ex"
         g.db.commit()
+        print "after co"
         flash('New entry was successfully posted')
-
+        print "after fla"
         return redirect('/')
     return render_template("report.html", **context)
     # print "report"
