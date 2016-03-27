@@ -203,10 +203,6 @@ def another():
 #   g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
 #   return redirect('/')
 
-@app.route('/report/<webserviceurl>')
-def report(webserviceurl):
-    context = dict(url = webserviceurl)
-    return render_template("report.html", **context)
 
 @app.route('/webservice/<webserviceurl>')
 def webservice(webserviceurl):
@@ -221,13 +217,20 @@ def webservice(webserviceurl):
     context = dict(name = service_name, url = webserviceurl, comments = webservice_comments)
     return render_template("webservice.html", **context)
 
-@app.route('/comment/<webserviceurl>')
+
+@app.route('/report/<webserviceurl>', methods=['GET', 'POST'])
+def report(webserviceurl):
+    if request.method == 'POST':
+        print "post"
+        print request.form
+    context = dict(url = webserviceurl)
+    return render_template("report.html", **context)
+
+@app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
 def comment(webserviceurl):
+    if request.method == 'POST':
     context = dict(url = webserviceurl)
     return render_template("comment.html", **context)
-
-
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
