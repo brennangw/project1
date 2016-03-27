@@ -3,7 +3,4 @@
   <h2>Make a Report</h2>
   <p>You must be logged in</p>
   <p>Will be posted with user name not your email</p>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('report') }}" method=post>
-  </form>
 {% endblock %}
