@@ -220,6 +220,7 @@ def webservice(webserviceurl):
 
 @app.route('/report/<webserviceurl>', methods=['GET', 'POST'])
 def report(webserviceurl):
+    error = None
     if request.method == 'POST':
         print "post"
         return redirect('/')
