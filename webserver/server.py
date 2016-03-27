@@ -221,6 +221,11 @@ def webservice(webserviceurl):
     context = dict(name = service_name, url = webserviceurl, comments = webservice_comments)
     return render_template("webservice.html", **context)
 
+@app.route('/comment/<webserviceurl>')
+def comment(webserviceurl):
+    context = dict(url = webserviceurl)
+    return render_template("report.html", **context)
+
 
 
 

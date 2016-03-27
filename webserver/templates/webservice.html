@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>{{name}}</h2>
-  <h3>{{url}}</h3>
+  <h3>File a Report about {{url}}</h3>
 
   <div>
     {% for comment in comments %}
@@ -12,7 +11,7 @@
     </div>
     {% endfor %}
   </div>
-
+  <div><a href="/webservice/{{url}}">File a Report</a></div>
 <form method="POST" action="/add">
 <p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
 </form>
