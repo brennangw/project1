@@ -231,9 +231,9 @@ def report(webserviceurl):
         print request.form
         print request.form['url']
         print request.form['type']
-        now = str(datetime.utcnow())[0:20]
+        now = str(datetime.utcnow())[0:19]
         print now
-        g.db.execute('insert into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (?, ?, ?, ?)', [request.form['type'], request.form['url'], request.form['comment'], session['email']])
+        g.db.execute('insert into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (?, ?, ?, ?)', [request.form['type'], request.form['url'], request.form['comment'], session['email'], now])
         g.db.commit()
         flash('New entry was successfully posted')
 
