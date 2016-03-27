@@ -243,10 +243,10 @@ def login():
     error = None
     if request.method == 'POST':
         print "POST"
-        passwordHolder = g.conn.execute("SELECT name FROM public.serviceuser AS su WHERE su.username = %s ", request.form['username']).fetchone()
+        passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
         if (passwordHolder == None):
         #if request.form['username'] != "t":
-            error = 'Invalid username'
+            error = 'Invalid email'
         elif request.form['password'] != passwordHolder[0]:
             error = 'Invalid password'
         else:
