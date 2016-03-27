@@ -4,6 +4,7 @@
   <p>You must be logged in</p>
   <p>Will be posted with user name not your email</p>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="/report/{{url}}" method=post>
     <dl>
       <dt>webservice (URL): <input type=text name=url value={{url}}> <br>
       <input type="radio" name="type" value="slow" checked> Slow<br>
@@ -13,4 +14,5 @@
       <dd><textarea rows="4" cols="50"></textarea>
       <dd><input type=submit value=Submit>
     </dl>
+    </form>
 {% endblock %}
