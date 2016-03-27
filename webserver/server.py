@@ -203,35 +203,21 @@ def another():
 #   g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
 #   return redirect('/')
 
+@app.route('/report/<webserviceurl>')
+def report(webserviceurl):
+    context = dict(url = webserviceurl)
+    return render_template("report.html", **context)
+
 @app.route('/webservice/<webserviceurl>')
 def webservice(webserviceurl):
-    print "webservice route for: " + webserviceurl
-    #webservice info
     service_name = g.conn.execute("SELECT name FROM public.webservice AS ws WHERE ws.webserviceurl = %s ", [webserviceurl]).fetchone()[0]
-    #where ws.url = " + webserviceurl);
-    #temp_name_2 = temp_name.fetchone()
-    #     names.append(result['name'])  # can also be accessed using result[0]
-    #     cursor.close()
-    # context = dict(data = names)
-    # #comments
     webservice_comments = []
     cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email ORDER BY suc.suctime" , [webserviceurl])
     for result in cursor:
-      print result['username']
-      print result['suctextblob']
-      print result['suctime']
       temp = {'username': str(result['username']).strip(), 'text': str(result['suctextblob']).strip(), 'time': str(result['suctime'])}
       webservice_comments.append(temp)
     cursor.close()
-    print "comments"
     print webservice_comments
-    print "after comments"
-    # context = dict(data = names)
-    #     #comments
-    # cursor = g.conn.execute("")
-    # for result in cursor:
-    #     names.append(result['name'])
-    #     cursor.close()
     context = dict(name = service_name, url = webserviceurl, comments = webservice_comments)
     return render_template("webservice.html", **context)
 
