@@ -16,6 +16,7 @@ Read about it online.
 """
 
 import os
+from datetime import datetime
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, session, g, url_for, abort, render_template, g, redirect, Response, flash
@@ -230,8 +231,9 @@ def report(webserviceurl):
         print request.form
         print request.form['url']
         print request.form['type']
-        g.db.execute('insert into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (?, ?, ?, ?)', /
-            [request.form['title'], request.form['text']])
+        now = str(datetime.utcnow())[0:20]
+        print now
+        g.db.execute('insert into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (?, ?, ?, ?)', [request.form['type'], request.form['url'], request.form['comment'], session['email']])
         g.db.commit()
         flash('New entry was successfully posted')
 
@@ -264,6 +266,7 @@ def login():
             error = 'Invalid password'
         else:
             session['logged_in'] = True
+            session['email'] = str(request.form['email'])
             flash('You were logged in')
             return redirect('/')
     return render_template('login.html', error=error)
