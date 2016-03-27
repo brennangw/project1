@@ -223,7 +223,7 @@ def webservice(webserviceurl):
 def report(webserviceurl):
     context = dict(url = webserviceurl)
     if request.method == 'POST':
-        print "post"
+        print request.form['url']
         return redirect('/')
     return render_template("report.html", **context)
     # print "report"
@@ -246,7 +246,6 @@ def comment(webserviceurl):
 def login():
     error = None
     if request.method == 'POST':
-        print "POST"
         passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
         if (passwordHolder == None):
             error = 'Invalid email'
