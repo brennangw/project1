@@ -225,7 +225,8 @@ def report(webserviceurl):
     context = dict(url = webserviceurl)
     if request.method == 'POST':
         print "post"
-        print request.form
+        print request.form['url']
+        print request.form['type']
         return redirect('/')
     return render_template("report.html", **context)
     # print "report"
