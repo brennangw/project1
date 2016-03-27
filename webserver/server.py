@@ -224,10 +224,16 @@ def report(webserviceurl):
     print "report"
     context = dict(url = webserviceurl)
     if request.method == 'POST':
+        if not session.get('logged_in'):
+            abort(401)
         print "post"
         print request.form
         print request.form['url']
         print request.form['type']
+        g.db.execute('insert into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (?, ?, ?, ?)', /
+            [request.form['title'], request.form['text']])
+        g.db.commit()
+        flash('New entry was successfully posted')
 
         return redirect('/')
     return render_template("report.html", **context)
