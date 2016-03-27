@@ -222,6 +222,8 @@ def webservice(webserviceurl):
 @app.route('/report/<webserviceurl>', methods=['GET', 'POST'])
 def report(webserviceurl):
     context = dict(url = webserviceurl)
+    if request.method == 'POST':
+        return redirect('/')
     return render_template("report.html", **context)
     # print "report"
     # error = None
