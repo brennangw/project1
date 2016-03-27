@@ -245,22 +245,12 @@ def login():
         print "POST"
         passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
         if (passwordHolder == None):
-        #if request.form['username'] != "t":
             error = 'Invalid email'
         elif str(request.form['password']) != str(passwordHolder[0].strip()):
-            print "request.form['password']"
-            print request.form['password']
-            print "passwordHolder"
-            #print passwordHolder
-            print passwordHolder[0]
             error = 'Invalid password'
         else:
-            print 'else'
-            print session
             session['logged_in'] = True
-            print '1'
             flash('You were logged in')
-            print '2'
             return redirect('/')
     return render_template('login.html', error=error)
 
