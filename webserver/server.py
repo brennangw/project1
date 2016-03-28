@@ -231,10 +231,13 @@ def report(webserviceurl):
         print request.form
         print request.form['url']
         print request.form['type']
+	print request.form['comment']
         now = str(datetime.utcnow())[0:19]
         print now
         print session['email']
-        g.db.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", [str(request.form['type']), str(request.form['url']), str(request.form['comment']), str(session['email']), now])
+        #g.db.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", ["slow","google.com","TEST", "andrew@gmail.com", "1985-02-10"])
+        g.db.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", ['yelp.com', 'Login down. We are on it.', 'samss@gmail.com', '2016-02-30 01:25:24'])
+        #g.db.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", [str(request.form['type']), str(request.form['url']), str(request.form['comment']), str(session['email']), now])
         print "after ex"
         g.db.commit()
         print "after co"
