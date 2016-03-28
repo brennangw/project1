@@ -228,37 +228,24 @@ def report(webserviceurl):
     if request.method == 'POST':
         if not session.get('logged_in'):
             abort(401)
-        print "post"
-        print request.form['url']
-        print request.form['type']
-	print request.form['comment']
         now = str(datetime.utcnow())[0:19]
-        print now
         print session['email']
-
-        #g.db.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", ["slow","google.com","TEST", "andrew@gmail.com", "1985-02-10"])
-        #g.conn.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) VALUES ('slow', 'yelp.com', 'Login down. We are on it.', 'sally@gmail.com', '2016-01-30 01:15:52');");
         g.conn.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", [str(request.form['type']), str(request.form['url']), str(request.form['comment']), str(session['email']), now])
-        #g.conn.commit()
-        print "after co"
         flash('New entry was successfully posted')
-        print "after fla"
         return redirect('/')
     return render_template("report.html", **context)
-    # print "report"
-    # error = None
-    # if request.method == 'POST':
-    #     print "post"
-    #     print "post2"
-    #     print request
-    #     return redirect('/')
-    # context = dict(url = webserviceurl)
-    # print "report2"
-    # return render_template("report.html", **context)
 
 @app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
 def comment(webserviceurl):
     context = dict(url = webserviceurl)
+    if request.method == 'POST':
+        if not session.get('logged_in'):
+            abort(401)
+        now = str(datetime.utcnow())[0:19]
+        print session['email']
+        g.conn.execute("INSERT into public.comment (webserviceurl, suctextblob, email, suctime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['comment_blob']), str(session['email']), now])
+        flash('New entry was successfully posted')
+        return redirect('/')
     return render_template("comment.html", **context)
 
 @app.route('/login', methods=['GET', 'POST'])

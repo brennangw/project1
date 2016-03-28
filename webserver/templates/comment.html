@@ -4,12 +4,12 @@
   <p>You must be logged in</p>
   <p>Will be posted with user name not your email</p>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('login') }}" method=post>
+  <form action="{comment/{{url}}" method=post id="comment_form">
     <dl>
       <dt>webservice (URL): <input type=text name=url value={{url}}> <br>
       <dt>Comment:
-      <dd><textarea rows="4" cols="50"></textarea>
-      <dd><input type=submit value=Login>
+      <textarea rows="4" cols="50" name="comment_blob" form="comment_form"></textarea>
+      <dd><input type=submit value=Submit>
     </dl>
   </form>
 {% endblock %}
