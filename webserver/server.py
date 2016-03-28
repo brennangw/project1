@@ -24,7 +24,7 @@ DEBUG = True
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+app.secret_key = 'SSDFIXKDSFJIasdllllllllfaisxs'
 #
 # The following uses the sqlite3 database test.db -- you can use this for debugging purposes
 # However for the project you will need to connect to your Part 2 database in order to use the
@@ -45,7 +45,7 @@ DATABASEURI = "postgresql://bgw2119:PGKWXN@w4111db.eastus.cloudapp.azure.com/bgw
 #
 # This line creates a database engine that knows how to connect to the URI above
 #
-engine = create_engine(DATABASEURI)
+engine = create_engine(DATABASEURI, echo=True)
 
 
 #
