@@ -244,7 +244,7 @@ def comment(webserviceurl):
             abort(401)
         now = str(datetime.utcnow())[0:19]
         print session['email']
-        g.conn.execute("INSERT into public.comment (webserviceurl, suctextblob, email, suctime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['comment_blob']), str(session['email']), now])
+        g.conn.execute("INSERT into public.serviceusercomment (webserviceurl, suctextblob, email, suctime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['comment_blob']), str(session['email']), now])
         flash('New entry was successfully posted')
         return redirect('/')
     return render_template("comment.html", **context)
