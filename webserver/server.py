@@ -310,4 +310,5 @@ if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
 
 
-  app.run(debug=True)
+  #app.run()
+  run(debug=True)
