@@ -4,7 +4,7 @@
   <p>You must be logged in</p>
   <p>Will be posted with user name not your email</p>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{comment/{{url}}" method=post id="comment_form">
+  <form action="/comment/{{url}}" method=post id="comment_form">
     <dl>
       <dt>webservice (URL): <input type=text name=url value={{url}}> <br>
       <dt>Comment:
