@@ -26,7 +26,6 @@ logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 app.secret_key = 'SSDFIXKDSFJIasdllllllllfaisxs'
-app.run(debug=True)
 #
 # The following uses the sqlite3 database test.db -- you can use this for debugging purposes
 # However for the project you will need to connect to your Part 2 database in order to use the
@@ -311,4 +310,4 @@ if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
 
 
-  run()
+  app.run(debug=True)
