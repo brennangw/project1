@@ -237,6 +237,7 @@ def report(webserviceurl):
 
 @app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
 def comment(webserviceurl):
+    print "webserviceurl"
     context = dict(url = webserviceurl)
     if request.method == 'POST':
         if not session.get('logged_in'):
