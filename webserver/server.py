@@ -1,20 +1,5 @@
 #!/usr/bin/env python2.7
 
-"""
-Columbia W4111 Intro to databases
-Example webserver
-
-To run locally
-
-    python server.py
-
-Go to http://localhost:8111 in your browser
-
-
-A debugger such as "pdb" may be helpful for debugging.
-Read about it online.
-"""
-
 import os
 from datetime import datetime
 from sqlalchemy import *
@@ -26,56 +11,8 @@ logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 app.secret_key = 'SSDFIXKDSFJIasdllllllllfaisxs'
-#
-# The following uses the sqlite3 database test.db -- you can use this for debugging purposes
-# However for the project you will need to connect to your Part 2 database in order to use the
-# data
-#
-# XXX: The URI should be in the format of:
-#
-#     postgresql://USER:PASSWORD@w4111db.eastus.cloudapp.azure.com/username
-#
-# For example, if you had username ewu2493, password foobar, then the following line would be:
-#
-#     DATABASEURI = "postgresql://ewu2493:foobar@w4111db.eastus.cloudapp.azure.com/ewu2493"
-#
-
 DATABASEURI = "postgresql://bgw2119:PGKWXN@w4111db.eastus.cloudapp.azure.com/bgw2119"
-
-
-#
-# This line creates a database engine that knows how to connect to the URI above
-#
 engine = create_engine(DATABASEURI, echo=True)
-
-
-#
-# START SQLITE SETUP CODE
-#
-# after these statements run, you should see a file test.db in your webserver/ directory
-# this is a sqlite database that you can query like psql typing in the shell command line:
-#
-#     sqlite3 test.db
-#
-# The following sqlite3 commands may be useful:
-#
-#     .tables               -- will list the tables in the database
-#     .schema <tablename>   -- print CREATE TABLE statement for table
-#
-# The setup code should be deleted once you switch to using the Part 2 postgresql database
-#
-#engine.execute("""DROP TABLE IF EXISTS test;""")
-#engine.execute("""CREATE TABLE IF NOT EXISTS test (
-#  id serial,
-#  name text
-#);""")
-#engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
-#
-# END SQLITE SETUP CODE
-#
-
-
-
 @app.before_request
 def before_request():
   """
@@ -177,34 +114,7 @@ def index():
   #     {% endfor %}
   #
   context = dict(data = urls)
-
-
-  #
-  # render_template looks in the templates/ folder for files.
-  # for example, the below file reads template/index.html
-  #
-  #return render_template("index.html", **context)
   return render_template("index.html", **context)
-
-#
-# This is an example of a different path.  You can see it at
-#
-#     localhost:8111/another
-#
-# notice that the functio name is another() rather than index()
-# the functions for each app.route needs to have different names
-#
-@app.route('/another')
-def another():
-  return render_template("anotherfile.html")
-
-
-# Example of adding new data to the database
-# @app.route('/add', methods=['POST'])
-# def add():
-#   name = request.form['name']
-#   g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
-#   return redirect('/')
 
 
 @app.route('/webservice/<webserviceurl>')
@@ -232,7 +142,7 @@ def report(webserviceurl):
         print session['email']
         g.conn.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", [str(request.form['type']), str(request.form['url']), str(request.form['comment']), str(session['email']), now])
         flash('New entry was successfully posted')
-        return redirect('/')
+        return redirect('/report/'+webserviceurl)
     return render_template("report.html", **context)
 
 @app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
@@ -246,7 +156,7 @@ def comment(webserviceurl):
         print session['email']
         g.conn.execute("INSERT into public.serviceusercomment (webserviceurl, suctextblob, email, suctime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['comment_blob']), str(session['email']), now])
         flash('New entry was successfully posted')
-        return redirect('/')
+        return redirect('/comment/'+webserviceurl)
     return render_template("comment.html", **context)
 
 @app.route('/login', methods=['GET', 'POST'])

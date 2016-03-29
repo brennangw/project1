@@ -1,7 +1,17 @@
 {% extends "layout.html" %}
 {% block body %}
   <h3>File a Report about {{url}}</h3>
-
+  <div><a href="/report/{{url}}">File a Report</a></div>
+  <div><a href="/comment/{{url}}">Comment or ask a question</a></div>
+  <div>
+    {% for annoucement in annoucements %}
+    <div>
+    <div>{{comment.text}}</div>
+    <div>{{comment.username}}</div>
+    <div>{{comment.time}}</div>
+    </div>
+    {% endfor %}
+  </div>
   <div>
     {% for comment in comments %}
     <div>
@@ -11,8 +21,13 @@
     </div>
     {% endfor %}
   </div>
-  <div><a href="/report/{{url}}">File a Report</a></div>
-  <div><a href="/comment/{{url}}">Comment or ask a question</a></div>
-<form method="POST" action="/add">
-</form>
+  <div>
+    {% for report in reports %}
+    <div>
+    <div>{{comment.text}}</div>
+    <div>{{comment.username}}</div>
+    <div>{{comment.time}}</div>
+    </div>
+    {% endfor %}
+  </div>
 {% endblock %}
