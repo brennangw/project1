@@ -118,11 +118,15 @@ def login():
                 print "elif"
                 error = 'Passwords must match.'
                 return render_template('login.html', error=error)
-            g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
-            session['logged_in'] = True
-            session['email'] = str(request.form['email'])
-            flash('You were signed up and logged in')
-            return redirect('/')
+            else:
+                print "else"
+                g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
+                print "2"
+                session['logged_in'] = True
+                session['email'] = str(request.form['email'])
+                print "3"
+                flash('You were signed up and logged in')
+                return redirect('/')
         else:
             print "false"
             passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
