@@ -120,6 +120,9 @@ def login():
                 return render_template('login.html', error=error)
             else:
                 print "else"
+                print request.form['email']
+                print request.form['username']
+                print request.form['password1']
                 g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
                 print "2"
                 session['logged_in'] = True
