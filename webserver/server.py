@@ -45,7 +45,7 @@ def webservice(webserviceurl):
 
     #comments
     webservice_comments = []
-    cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email ORDER BY suc.suctime DESC LIMIT 10" , [webserviceurl])
+    cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email ORDER BY suc.suctime DESC LIMIT 20" , [webserviceurl])
     for result in cursor:
       temp = {'username': str(result['username']).strip(), 'text': str(result['suctextblob']).strip(), 'time': str(result['suctime'])}
       webservice_comments.append(temp)
@@ -53,7 +53,7 @@ def webservice(webserviceurl):
 
     #reports
     webservice_reports = []
-    cursor = g.conn.execute("SELECT * FROM public.report AS rpt, public.serviceuser AS su WHERE rpt.webserviceurl = %s AND su.email = rpt.email ORDER BY rpt.reporttime DESC LIMIT 10" , [webserviceurl])
+    cursor = g.conn.execute("SELECT * FROM public.report AS rpt, public.serviceuser AS su WHERE rpt.webserviceurl = %s AND su.email = rpt.email ORDER BY rpt.reporttime DESC LIMIT 20" , [webserviceurl])
     for result in cursor:
       temp = {'username':str(result['username']).strip(), 'type':str(result['reporttype']).strip(), 'text': str(result['reporttextblob']).strip(), 'time': str(result['reporttime'])}
       webservice_reports.append(temp)
@@ -61,7 +61,7 @@ def webservice(webserviceurl):
 
     #announcements
     webservice_announcements = []
-    cursor = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra, public.webservicerepresentative AS su WHERE ra.webserviceurl = %s AND su.email = ra.email ORDER BY ra.ratime DESC LIMIT 3" , [webserviceurl])
+    cursor = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra, public.webservicerepresentative AS su WHERE ra.webserviceurl = %s AND su.email = ra.email ORDER BY ra.ratime DESC LIMIT 6" , [webserviceurl])
     for result in cursor:
       temp = {'text': str(result['ratextblob']).strip(), 'time': str(result['ratime'])}
       print "temp" + str(temp)
