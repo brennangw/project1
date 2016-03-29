@@ -107,15 +107,15 @@ def account():
         print "2.5"
         if (str(request.form["delete"]) == "DELETE"):
             print "3"
-            g.conn.execute("DELETE from public.serviceuser AS su WHERE su.email = %s", session['email'])
+            g.conn.execute("DELETE from public.serviceuser WHERE serviceuser.email = %s", session['email'])
             session.pop('logged_in', None)
             session.pop('email', None)
         if (str(request.form["newpassword"]) != ""):
             print "4"
-            g.conn.execute("UPDATE public.serviceuser AS su SET su.password = %s WHERE su.email = %s", [request.form['newpassword'], session['email']])
+            g.conn.execute("UPDATE public.serviceuser SET serviceuser.password = %s WHERE serviceuser.email = %s", [request.form['newpassword'], session['email']])
         if (str(request.form["newemail"]) != ""):
             print "5"
-            g.conn.execute("UPDATE public.serviceuser AS su SET su.email = %s WHERE su.email = %s", [request.form['newemail'], session['email']])
+            g.conn.execute("UPDATE public.serviceuser SET serviceuser.email = %s WHERE serviceuser.email = %s", [request.form['newemail'], session['email']])
             request.form['newemail']
         return render_template("account.html")
     return render_template('account.html', error=error)
