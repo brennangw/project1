@@ -100,28 +100,19 @@ def comment(webserviceurl):
 def account():
     error = None
     if request.method == 'POST':
-        print "1"
         if not session.get('logged_in'):
-            print "2"
             abort(401)
-        print "2.5"
         if (str(request.form["delete"]) == "DELETE"):
-            print "3"
             g.conn.execute("DELETE from public.serviceuser WHERE email = %s", session['email'])
             session.pop('logged_in', None)
             session.pop('email', None)
         if (str(request.form["newpassword"]) != ""):
-            print "4"
             g.conn.execute("UPDATE public.serviceuser SET password = %s WHERE email = %s", [request.form['newpassword'], session['email']])
         if (str(request.form["newemail"]) != ""):
-            print "5"
             g.conn.execute("UPDATE public.serviceuser SET email = %s WHERE email = %s", [request.form['newemail'], session['email']])
-            print "6"
             session['email'] = request.form['newemail']
         if (str(request.form["newusername"]) != ""):
-            print "7"
             g.conn.execute("UPDATE public.serviceuser SET username = %s WHERE email = %s", [request.form['newusername'], session['email']])
-            print "8"
             session['email'] = request.form['newemail']
         return render_template("account.html")
     return render_template('account.html', error=error)
