@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
   <div><h2>{{name}} @ {{url}}</h2></div>
-  <div><a href="/report/{{url}}">File a Report</a></div>
-  <div><a href="/comment/{{url}}">Comment or ask a question</a></div>
+  <div style="width: 300px; background-color: rgb(200,100,100)"><a href="/report/{{url}}">File a Report</a></div>
+  <div style="width: 300px; background-color: rgb(70,200,70)"><a href="/comment/{{url}}">Comment or ask a question</a></div>
   <h3>Announcement Info</h3>
   <div style="overflow-y: scroll; max-height:150px; max-width: 300px; background-color: rgb(200,200,50)">
     {% for announcement in announcements %}
