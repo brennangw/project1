@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div style="background-color: rgb(70,200,70); width: 400px;"><h2>Manage Account</h2></div>
+  <p>You must be logged in</p>
+  <p>Type delete to delete account.</p>
+  <p>No other info needed.</p>
+  <p>Can also update email and password. </p>
+  <p>Leave blank if you don't want them updated.</p>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="/account" method=post>
+    <dl>
+      <dt>New Email: <input type=text name=newemail> <br>
+      <dt>New Password: <input type=text name=newpasswordl> <br>
+      <dt>Delete: <input type=text name=delete> <br>
+      <dd><input type=submit value=Submit>
+    </dl>
+  </form>
+{% endblock %}

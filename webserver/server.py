@@ -65,9 +65,7 @@ def webservice(webserviceurl):
     cursor = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra, public.webservicerepresentative AS su WHERE ra.webserviceurl = %s AND su.email = ra.email ORDER BY ra.ratime DESC LIMIT 6" , [webserviceurl])
     for result in cursor:
       temp = {'text': str(result['ratextblob']).strip(), 'time': str(result['ratime'])}
-      print "temp" + str(temp)
       webservice_announcements.append(temp)
-    print "webservice_announcements" + str(webservice_announcements);
     cursor.close()
     context = dict(name = service_name, url = webserviceurl, comments = webservice_comments, reports = webservice_reports, announcements = webservice_announcements)
 
@@ -76,13 +74,11 @@ def webservice(webserviceurl):
 
 @app.route('/report/<webserviceurl>', methods=['GET', 'POST'])
 def report(webserviceurl):
-    print "report"
     context = dict(url = webserviceurl)
     if request.method == 'POST':
         if not session.get('logged_in'):
             abort(401)
         now = str(datetime.utcnow())[0:19]
-        print session['email']
         g.conn.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", [str(request.form['type']), str(request.form['url']), str(request.form['comment']), str(session['email']), now])
         flash('New entry was successfully posted')
         return redirect('/webservice/'+webserviceurl)
@@ -90,55 +86,54 @@ def report(webserviceurl):
 
 @app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
 def comment(webserviceurl):
-    print "webserviceurl"
     context = dict(url = webserviceurl)
     if request.method == 'POST':
         if not session.get('logged_in'):
             abort(401)
         now = str(datetime.utcnow())[0:19]
-        print session['email']
         g.conn.execute("INSERT into public.serviceusercomment (webserviceurl, suctextblob, email, suctime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['comment_blob']), str(session['email']), now])
         flash('New entry was successfully posted')
         return redirect('/webservice/'+webserviceurl)
     return render_template("comment.html", **context)
 
+@app.route('/account', methods=['GET', 'POST'])
+def account():
+    error = None
+    if request.method == 'POST':
+        if not session.get('logged_in'):
+            abort(401)
+        if (str(request.form["delete"]) == "DELETE"):
+            g.conn.execute("DELETE from public.serviceuser AS su WHERE su.email = %s", session['email'])
+        if (str(request.form["newpassword"]) != "")
+            g.conn.execute("UPDATE public.serviceuser AS su SET su.password = %s WHERE su.email = %s", [request.form['newpassword'], session['email']])
+        if (str(request.form["newemail"]) != "")
+            g.conn.execute("UPDATE public.serviceuser AS su SET su.email = %s WHERE su.email = %s", [request.form['newemail'], session['email']])
+
+    return render_template('account.html', error=error)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        print "post"
         if request.form['sign_up'] == 'TRUE':
-            print "true"
             suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
             uuCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.username = %s ", request.form['username'])
             if (suCheck.rowcount > 0):
-                print "if"
                 error = 'Email in use.'
                 return render_template('login.html', error=error)
-                print "after render"
             if (uuCheck.rowcount > 0):
-                print "if"
                 error = 'Username in use.'
                 return render_template('login.html', error=error)
-                print "after render"
             elif (request.form['password1'] != request.form['password2']):
-                print "elif"
                 error = 'Passwords must match.'
                 return render_template('login.html', error=error)
             else:
-                print "else"
-                print request.form['email']
-                print request.form['username']
-                print request.form['password1']
                 g.conn.execute("INSERT into public.serviceuser (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
-                print "2"
                 session['logged_in'] = True
                 session['email'] = str(request.form['email'])
-                print "3"
                 flash('You were signed up and logged in')
                 return redirect('/')
         else:
-            print "false"
             passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
             if (passwordHolder == None):
                 error = 'Invalid email'
@@ -161,7 +156,6 @@ def logout():
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    print "admin"
     if request.method == 'POST':
         if (request.form['admin_password'] != "asdf"):
             error = "Admin Password Invalid"
@@ -178,7 +172,6 @@ def admin():
 
 @app.route('/announcement', methods=['GET', 'POST'])
 def announcement():
-    print "announcement"
     if request.method == 'POST':
         now = str(datetime.utcnow())[0:19]
         check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND wr.password = %s AND wr.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(request.form['url'])])
