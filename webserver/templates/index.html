@@ -2,7 +2,7 @@
 {% block body %}
   <div>
     {% for n in data %}
-    <div><h3><a href="/webservice/{{n.url}}" style="color: black">{{n.name}} @ {{n.url}}</a></h3></div>
+    <div><h3><a href="/webservice/{{n.url}}" style="color: black; text-decoration:none">{{n.name}} @ {{n.url}}</a></h3></div>
     {% endfor %}
   </div>
 {% endblock %}
