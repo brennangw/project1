@@ -209,7 +209,7 @@ if __name__ == "__main__":
   def run(debug, threaded, host, port):
     HOST, PORT = host, port
     print "running on %s:%d" % (HOST, PORT)
-    app.run(host=HOST, port=PORT, debug=True, threaded=threaded)
+    app.run(host=HOST, port=PORT, debug=DEBUG, threaded=threaded)
 
 
   #app.run()
