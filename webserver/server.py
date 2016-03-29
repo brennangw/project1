@@ -116,7 +116,8 @@ def account():
         if (str(request.form["newemail"]) != ""):
             print "5"
             g.conn.execute("UPDATE public.serviceuser SET email = %s WHERE email = %s", [request.form['newemail'], session['email']])
-            request.form['newemail']
+            print "6"
+            session['email'] = request.form['newemail']
         return render_template("account.html")
     return render_template('account.html', error=error)
 
