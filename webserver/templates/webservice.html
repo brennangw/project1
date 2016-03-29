@@ -4,33 +4,36 @@
   <div><a href="/report/{{url}}">File a Report</a></div>
   <div><a href="/comment/{{url}}">Comment or ask a question</a></div>
   <h4>Announcement Info</h4>
-  <div>
+  <div style="overflow-y: scroll; height:400px; max-width: 300px;">
     {% for announcement in announcements %}
     <div>
-    <div>{{announcement.text}}</div>
-    <div>{{announcement.time}}</div>
+    <div>Announcement: {{announcement.text}}</div>
+    <div>Time: {{announcement.time}}</div>
     </div>
+    <hr>
     {% endfor %}
   </div>
   <h4>Comment Info</h4>
-  <div>
+  <div style="overflow-y: scroll; height:800px; max-width: 300px;">
     {% for comment in comments %}
     <div>
-    <div>{{comment.text}}</div>
-    <div>{{comment.username}}</div>
-    <div>{{comment.time}}</div>
+    <div>Comment: {{comment.text}}</div>
+    <div>By: {{comment.username}}</div>
+    <div>Time: {{comment.time}}</div>
     </div>
+    <hr>
     {% endfor %}
   </div>
   <h4>Report Info</h4>
-  <div>
+  <div style="overflow-y: scroll; height:800px; max-width: 300px;">
     {% for report in reports %}
     <div>
-    <div>{{report.type}}</div>
-    <div>{{report.username}}</div>
-    <div>{{report.text}}</div>
-    <div>{{report.time}}</div>
+    <div>Report Type: {{report.type}}</div>
+    <div>Comments: {{report.text}}</div>
+    <div>By: {{report.username}}</div>
+    <div>Time: {{report.time}}</div>
     </div>
+    <hr>
     {% endfor %}
   </div>
 {% endblock %}
