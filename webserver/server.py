@@ -31,10 +31,11 @@ def teardown_request(exception):
 
 @app.route('/')
 def index():
-  cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice AS ws ORDER BY ws.webserviceurl")
+  cursor = g.conn.execute("SELECT * FROM public.webservice AS ws ORDER BY ws.webserviceurl")
   urls = []
   for result in cursor:
-    urls.append(result['webserviceurl'])  # can also be accessed using result[0]
+      temp = {'url':str(result['webserviceurl']).strip(), 'name':str(result['name']).strip()}
+      urls.append(temp)  # can also be accessed using result[0]
   cursor.close()
   context = dict(data = urls)
   return render_template("index.html", **context)
