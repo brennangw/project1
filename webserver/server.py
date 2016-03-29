@@ -158,6 +158,34 @@ def logout():
     flash('Logged out succesfully')
     return redirect(url_for('index'))
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    print "admin"
+    if request.method == 'POST':
+        now = str(datetime.utcnow())[0:19]
+        g.conn.execute("INSERT into public.webservicerepresentative (email, password, webserviceurl) values (%s, %s, %s)", [str(request.form['email']), str(request.form['password']), str(session['url'])])
+        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(session['url'])])
+        if (check.rowcount > 0):
+            error = "New announcer not added"
+            return render_template('admin.html', error=error)
+        flash('New announcer added')
+        return redirect('/admin')
+    return render_template("admin.html")
+
+@app.route('/announcement', methods=['GET', 'POST'])
+def announcement():
+    print "announcement"
+    if request.method == 'POST':
+        now = str(datetime.utcnow())[0:19]
+        g.conn.execute("INSERT into public.representativeannouncement (webserviceurl, ratextblob, email, ratime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
+        check = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra WHERE ra.webserviceurl = %s, ra.ratextblob = %s,  ra.email = %s, ra.ratime = %s", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
+        if (check.rowcount > 0):
+            error = "Announcement was not successfully posted"
+            return render_template('announcement.html', error=error)
+        flash('Announcement was successfully posted')
+        return redirect('/webservice/'+str(request.form['url']))
+    return render_template("announcement.html")
+
 
 if __name__ == "__main__":
   import click
