@@ -105,7 +105,9 @@ def comment(webserviceurl):
 def login():
     error = None
     if request.method == 'POST':
+        print "post"
         if request.form['sign_up'] == 'TRUE':
+            print "true"
             suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
             if (suCheck.rowcount > 0):
                 error = 'Email in use.'
@@ -116,16 +118,18 @@ def login():
             session['email'] = str(request.form['email'])
             flash('You were signed up and logged in')
             return redirect('/')
-        passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
-        if (passwordHolder == None):
-            error = 'Invalid email'
-        elif str(request.form['password']) != str(passwordHolder[0].strip()):
-            error = 'Invalid password'
         else:
-            session['logged_in'] = True
-            session['email'] = str(request.form['email'])
-            flash('You were logged in')
-            return redirect('/')
+            print "false"
+            passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
+            if (passwordHolder == None):
+                error = 'Invalid email'
+            elif str(request.form['password']) != str(passwordHolder[0].strip()):
+                error = 'Invalid password'
+            else:
+                session['logged_in'] = True
+                session['email'] = str(request.form['email'])
+                flash('You were logged in')
+                return redirect('/')
     return render_template('login.html', error=error)
 
 @app.route('/logout')
