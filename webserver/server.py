@@ -167,7 +167,7 @@ def admin():
             return render_template('admin.html', error=error)
         now = str(datetime.utcnow())[0:19]
         g.conn.execute("INSERT into public.webservicerepresentative (email, password, webserviceurl) values (%s, %s, %s)", [str(request.form['email']), str(request.form['password']), str(session['url'])])
-        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(session['url'])])
+        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(request.form['url'])])
         if (check.rowcount > 0):
             error = "New announcer not added"
             return render_template('admin.html', error=error)
@@ -180,7 +180,7 @@ def announcement():
     print "announcement"
     if request.method == 'POST':
         now = str(datetime.utcnow())[0:19]
-        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(session['url'])])
+        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(request.form['url'])])
         if (check.rowcount > 0):
             error = "Login incorrect"
             return render_template('announcement.html', error=error)
