@@ -105,7 +105,7 @@ def comment(webserviceurl):
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['sign_up'] == 'TRUE'
+        if request.form['sign_up'] == 'TRUE':
             suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
             if (suCheck.rowcount > 0):
                 error = 'Email in use.'
