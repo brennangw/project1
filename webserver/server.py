@@ -180,7 +180,7 @@ def announcement():
     print "announcement"
     if request.method == 'POST':
         now = str(datetime.utcnow())[0:19]
-        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(request.form['url'])])
+        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND wr.password = %s AND wr.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(request.form['url'])])
         if (check.rowcount > 0):
             error = "Login incorrect"
             return render_template('announcement.html', error=error)
