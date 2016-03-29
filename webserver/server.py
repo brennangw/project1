@@ -64,7 +64,7 @@ def webservice(webserviceurl):
     webservice_announcements = []
     cursor = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra, public.webservicerepresentative AS su WHERE ra.webserviceurl = %s AND su.email = ra.email ORDER BY ra.ratime" , [webserviceurl])
     for result in cursor:
-      temp = {'username': 'text': str(result['ratextblob']).strip(), 'time': str(result['ratime'])}
+      temp = {'text': str(result['ratextblob']).strip(), 'time': str(result['ratime'])}
       print "TEMP:" + temp
       webservice_announcements.append(temp)
     cursor.close()
