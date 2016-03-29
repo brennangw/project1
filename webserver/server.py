@@ -111,8 +111,10 @@ def login():
             suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
             if (suCheck.rowcount > 0):
                 error = 'Email in use.'
+                render_template('login.html', error=error)
             elif (request.form['password1'] != request.form['password2']):
                 error = 'Passwords must match.'
+                render_template('login.html', error=error)
             g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
             session['logged_in'] = True
             session['email'] = str(request.form['email'])
@@ -123,8 +125,10 @@ def login():
             passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
             if (passwordHolder == None):
                 error = 'Invalid email'
+                render_template('login.html', error=error)
             elif str(request.form['password']) != str(passwordHolder[0].strip()):
                 error = 'Invalid password'
+                render_template('login.html', error=error)
             else:
                 session['logged_in'] = True
                 session['email'] = str(request.form['email'])
