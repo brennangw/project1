@@ -185,7 +185,7 @@ def announcement():
             error = "Login incorrect"
             return render_template('announcement.html', error=error)
         g.conn.execute("INSERT into public.representativeannouncement (webserviceurl, ratextblob, email, ratime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
-        check = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra WHERE ra.webserviceurl = %s, ra.ratextblob = %s,  ra.email = %s, ra.ratime = %s", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
+        check = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra WHERE ra.webserviceurl = %s AND ra.ratextblob = %s AND ra.email = %s AND ra.ratime = %s", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
         if (check.rowcount <= 0):
             error = "Announcement was not successfully posted"
             return render_template('announcement.html', error=error)
