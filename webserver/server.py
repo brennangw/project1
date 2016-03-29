@@ -112,12 +112,12 @@ def login():
             if (suCheck.rowcount > 0):
                 print "if"
                 error = 'Email in use.'
-                render_template('login.html', error=error)
+                return render_template('login.html', error=error)
                 print "after render"
             elif (request.form['password1'] != request.form['password2']):
                 print "elif"
                 error = 'Passwords must match.'
-                render_template('login.html', error=error)
+                return render_template('login.html', error=error)
             g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
             session['logged_in'] = True
             session['email'] = str(request.form['email'])
