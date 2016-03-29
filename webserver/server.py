@@ -104,6 +104,7 @@ def account():
         if not session.get('logged_in'):
             print "2"
             abort(401)
+        print "2.5"
         if (str(request.form["delete"]) == "DELETE"):
             print "3"
             g.conn.execute("DELETE from public.serviceuser AS su WHERE su.email = %s", session['email'])
