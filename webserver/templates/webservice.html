@@ -3,6 +3,7 @@
   <h3>File a Report about {{url}}</h3>
   <div><a href="/report/{{url}}">File a Report</a></div>
   <div><a href="/comment/{{url}}">Comment or ask a question</a></div>
+  <h4>Announcement Info</h4>
   <div>
     {% for announcement in announcements %}
     <div>
@@ -11,6 +12,7 @@
     </div>
     {% endfor %}
   </div>
+  <h4>Comment Info</h4>
   <div>
     {% for comment in comments %}
     <div>
@@ -20,6 +22,7 @@
     </div>
     {% endfor %}
   </div>
+  <h4>Report Info</h4>
   <div>
     {% for report in reports %}
     <div>
