@@ -3,7 +3,7 @@
   <div><h2>{{name}} @ {{url}}</h2></div>
   <div><a href="/report/{{url}}">File a Report</a></div>
   <div><a href="/comment/{{url}}">Comment or ask a question</a></div>
-  <h4>Announcement Info</h4>
+  <h3>Announcement Info</h3>
   <div style="overflow-y: scroll; max-height:150px; max-width: 300px; background-color: rgb(200,200,50)">
     {% for announcement in announcements %}
     <div>
@@ -13,8 +13,8 @@
     <hr>
     {% endfor %}
   </div>
-  <h4>Comment Info</h4>
-  <div style="overflow-y: scroll; max-height:300px; max-width: 300px; background-color: rgb(50,200,50)">
+  <h3>Comment Info</h3>
+  <div style="overflow-y: scroll; max-height:300px; max-width: 300px; background-color: rgb(70,200,70)">
     {% for comment in comments %}
     <div>
     <div>Comment: {{comment.text}}</div>
@@ -24,8 +24,8 @@
     <hr>
     {% endfor %}
   </div>
-  <h4>Report Info</h4>
-  <div style="overflow-y: scroll; max-height:300px; max-width: 300px; background-color: rgb(200,50,200)">
+  <h3 style=>Report Info</h3>
+  <div style="overflow-y: scroll; max-height:300px; max-width: 300px; background-color: rgb(100,50,200)">
     {% for report in reports %}
     <div>
     <div>Report Type: {{report.type}}</div>
