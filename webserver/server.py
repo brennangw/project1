@@ -15,13 +15,6 @@ DATABASEURI = "postgresql://bgw2119:PGKWXN@w4111db.eastus.cloudapp.azure.com/bgw
 engine = create_engine(DATABASEURI, echo=True)
 @app.before_request
 def before_request():
-  """
-  This function is run at the beginning of every web request
-  (every time you enter an address in the web browser).
-  We use it to setup a database connection that can be used throughout the request
-
-  The variable g is globally accessible
-  """
   try:
     g.conn = engine.connect()
   except:
@@ -31,88 +24,18 @@ def before_request():
 
 @app.teardown_request
 def teardown_request(exception):
-  """
-  At the end of the web request, this makes sure to close the database connection.
-  If you don't the database could run out of memory!
-  """
   try:
     g.conn.close()
   except Exception as e:
     pass
 
-
-#
-# @app.route is a decorator around index() that means:
-#   run index() whenever the user tries to access the "/" path using a GET request
-#
-# If you wanted the user to go to e.g., localhost:8111/foobar/ with POST or GET then you could use
-#
-#       @app.route("/foobar/", methods=["POST", "GET"])
-#
-# PROTIP: (the trailing / in the path is important)
-#
-# see for routing: http://flask.pocoo.org/docs/0.10/quickstart/#routing
-# see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
-#
 @app.route('/')
 def index():
-  print "in index"
-  """
-  request is a special object that Flask provides to access web request information:
-
-  request.method:   "GET" or "POST"
-  request.form:     if the browser submitted a form, this contains the data in the form
-  request.args:     dictionary of URL arguments e.g., {a:1, b:2} for http://localhost?a=1&b=2
-
-  See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
-  """
-
-  # DEBUG: this is debugging code to see what request looks like
-  print request.args
-
-
-  #
-  # example of a database query
-  #
-  print "before cursor"
   cursor = g.conn.execute("SELECT webserviceurl FROM public.webservice AS ws ORDER BY ws.webserviceurl")
-  print "after cursor"
-  print cursor
   urls = []
   for result in cursor:
-    print "for result: " + result['webserviceurl']
     urls.append(result['webserviceurl'])  # can also be accessed using result[0]
   cursor.close()
-
-  #for url in urls:
-#      print url
-
-  #
-  # Flask uses Jinja templates, which is an extension to HTML where you can
-  # pass data to a template and dynamically generate HTML based on the data
-  # (you can think of it as simple PHP)
-  # documentation: https://realpython.com/blog/python/primer-on-jinja-templating/
-  #
-  # You can see an example template in templates/index.html
-  #
-  # context are the variables that are passed to the template.
-  # for example, "data" key in the context variable defined below will be
-  # accessible as a variable in index.html:
-  #
-  #     # will print: [u'grace hopper', u'alan turing', u'ada lovelace']
-  #     <div>{{data}}</div>
-  #
-  #     # creates a <div> tag for each element in data
-  #     # will print:
-  #     #
-  #     #   <div>grace hopper</div>
-  #     #   <div>alan turing</div>
-  #     #   <div>ada lovelace</div>
-  #     #
-  #     {% for n in data %}
-  #     <div>{{n}}</div>
-  #     {% endfor %}
-  #
   context = dict(data = urls)
   return render_template("index.html", **context)
 
@@ -120,14 +43,32 @@ def index():
 @app.route('/webservice/<webserviceurl>')
 def webservice(webserviceurl):
     service_name = g.conn.execute("SELECT name FROM public.webservice AS ws WHERE ws.webserviceurl = %s ", [webserviceurl]).fetchone()[0]
+
+    #comments
     webservice_comments = []
     cursor = g.conn.execute("SELECT * FROM public.serviceusercomment AS suc, public.serviceuser AS su WHERE suc.webserviceurl = %s AND su.email = suc.email ORDER BY suc.suctime" , [webserviceurl])
     for result in cursor:
       temp = {'username': str(result['username']).strip(), 'text': str(result['suctextblob']).strip(), 'time': str(result['suctime'])}
       webservice_comments.append(temp)
     cursor.close()
-    print webservice_comments
-    context = dict(name = service_name, url = webserviceurl, comments = webservice_comments)
+
+    #reports
+    webservice_reports = []
+    cursor = g.conn.execute("SELECT * FROM public.report AS rpt, public.serviceuser AS su WHERE rpt.webserviceurl = %s AND su.email = suc.email ORDER BY rpt.reporttime" , [webserviceurl])
+    for result in cursor:
+      temp = {'username': str(result['username']).strip(), 'type':str(result['report'].strip(), 'text': str(result['reporttextblob']).strip(), 'time': str(result['reporttime'])}
+      reports.append(temp)
+    cursor.close()
+
+    #announcements
+    webservice_announcements = []
+    cursor = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra, public.serviceuser AS su WHERE ra.webserviceurl = %s AND su.email = ra.email ORDER BY ra.ratime" , [webserviceurl])
+    for result in cursor:
+      temp = {'username': str(result['username']).strip(), 'text': str(result['ratextblob']).strip(), 'time': str(result['ratime'])}
+      announcements.append(temp)
+    cursor.close()
+    context = dict(name = service_name, url = webserviceurl, comments = webservice_comments, reports = webservice_reports, announcements = webservice_announcements)
+
     return render_template("webservice.html", **context)
 
 
@@ -191,18 +132,6 @@ if __name__ == "__main__":
   @click.argument('HOST', default='0.0.0.0')
   @click.argument('PORT', default=8111, type=int)
   def run(debug, threaded, host, port):
-    """
-    This function handles command line parameters.
-    Run the server using
-
-        python server.py
-
-    Show the help text using
-
-        python server.py --help
-
-    """
-
     HOST, PORT = host, port
     print "running on %s:%d" % (HOST, PORT)
     app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)

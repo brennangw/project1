@@ -6,9 +6,9 @@
   <div>
     {% for annoucement in annoucements %}
     <div>
-    <div>{{comment.text}}</div>
-    <div>{{comment.username}}</div>
-    <div>{{comment.time}}</div>
+    <div>{{announcement.text}}</div>
+    <div>{{announcement.username}}</div>
+    <div>{{announcement.time}}</div>
     </div>
     {% endfor %}
   </div>
@@ -24,9 +24,10 @@
   <div>
     {% for report in reports %}
     <div>
-    <div>{{comment.text}}</div>
-    <div>{{comment.username}}</div>
-    <div>{{comment.time}}</div>
+    <div>{{report.type}}</div>
+    <div>{{report.username}}</div>
+    <div>{{report.text}}</div>
+    <div>{{report.time}}</div>
     </div>
     {% endfor %}
   </div>
