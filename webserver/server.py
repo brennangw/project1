@@ -109,9 +109,15 @@ def login():
         if request.form['sign_up'] == 'TRUE':
             print "true"
             suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
+            uuCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.username = %s ", request.form['username'])
             if (suCheck.rowcount > 0):
                 print "if"
                 error = 'Email in use.'
+                return render_template('login.html', error=error)
+                print "after render"
+            if (uuCheck.rowcount > 0):
+                print "if"
+                error = 'Username in use.'
                 return render_template('login.html', error=error)
                 print "after render"
             elif (request.form['password1'] != request.form['password2']):
