@@ -8,7 +8,7 @@
     <a href="{{ url_for('login') }}">log in / sign up</a>
   {% else %}
     <a href="{{ url_for('logout') }}">log out</a>
-    <a href="/account"> Account Settings</a>
+    <a href="/account"> account settings</a>
   {% endif %}
   </div>
   {% for message in get_flashed_messages() %}
