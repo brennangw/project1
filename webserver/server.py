@@ -56,7 +56,7 @@ def webservice(webserviceurl):
     webservice_reports = []
     cursor = g.conn.execute("SELECT * FROM public.report AS rpt, public.serviceuser AS su WHERE rpt.webserviceurl = %s AND su.email = rpt.email ORDER BY rpt.reporttime" , [webserviceurl])
     for result in cursor:
-      temp = {'username': str(result['username']).strip(), 'type':str(result['report']).strip(), 'text': str(result['reporttextblob']).strip(), 'time': str(result['reporttime'])}
+      temp = {'username':str(result['username']).strip(), 'type':str(result['reporttype']).strip(), 'text': str(result['reporttextblob']).strip(), 'time': str(result['reporttime'])}
       reports.append(temp)
     cursor.close()
 
