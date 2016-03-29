@@ -110,7 +110,8 @@ def account():
             g.conn.execute("UPDATE public.serviceuser AS su SET su.password = %s WHERE su.email = %s", [request.form['newpassword'], session['email']])
         if (str(request.form["newemail"]) != ""):
             g.conn.execute("UPDATE public.serviceuser AS su SET su.email = %s WHERE su.email = %s", [request.form['newemail'], session['email']])
-
+            request.form['newemail']
+        return render_template("account.html")
     return render_template('account.html', error=error)
 
 @app.route('/login', methods=['GET', 'POST'])
