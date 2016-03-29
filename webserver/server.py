@@ -67,6 +67,7 @@ def webservice(webserviceurl):
       temp = {'text': str(result['ratextblob']).strip(), 'time': str(result['ratime'])}
       print "temp" + str(temp)
       webservice_announcements.append(temp)
+    print "webservice_announcements" + str(webservice_announcements);
     cursor.close()
     context = dict(name = service_name, url = webserviceurl, comments = webservice_comments, reports = webservice_reports, announcements = webservice_announcements)
 
