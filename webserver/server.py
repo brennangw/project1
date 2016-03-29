@@ -41,17 +41,7 @@ def index():
 
 @app.route('/sign_up',methods=['POST'])
 def sign_up():
-    error = None
-    suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
-    if (suCheck.rowcount > 0):
-        error = 'Email in use.'
-    elif (request.form['password1'] != request.form['password2']):
-        error = 'Passwords must match.'
-    g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
-    session['logged_in'] = True
-    session['email'] = str(request.form['email'])
-    flash('You were signed up and logged in')
-    return redirect('/')
+
 
 
 
@@ -122,6 +112,17 @@ def comment(webserviceurl):
 def login():
     error = None
     if request.method == 'POST':
+        if request.form['sign_up'] == 'TRUE'
+            suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
+            if (suCheck.rowcount > 0):
+                error = 'Email in use.'
+            elif (request.form['password1'] != request.form['password2']):
+                error = 'Passwords must match.'
+            g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
+            session['logged_in'] = True
+            session['email'] = str(request.form['email'])
+            flash('You were signed up and logged in')
+            return redirect('/')
         passwordHolder = g.conn.execute("SELECT su.password FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email']).fetchone()
         if (passwordHolder == None):
             error = 'Invalid email'
