@@ -162,6 +162,9 @@ def logout():
 def admin():
     print "admin"
     if request.method == 'POST':
+        if (request.form['admin_password'] != "asdf"):
+            error = "Admin Password Invalid"
+            return render_template('admin.html', error=error)
         now = str(datetime.utcnow())[0:19]
         g.conn.execute("INSERT into public.webservicerepresentative (email, password, webserviceurl) values (%s, %s, %s)", [str(request.form['email']), str(request.form['password']), str(session['url'])])
         check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(session['url'])])
@@ -177,6 +180,10 @@ def announcement():
     print "announcement"
     if request.method == 'POST':
         now = str(datetime.utcnow())[0:19]
+        check = g.conn.execute("SELECT * FROM public.webservicerepresentative AS wr WHERE wr.email = %s AND ws.password = %s AND ws.webserviceurl = %s", [str(request.form['email']), str(request.form['password']), str(session['url'])])
+        if (check.rowcount > 0):
+            error = "Login incorrect"
+            return render_template('announcement.html', error=error)
         g.conn.execute("INSERT into public.representativeannouncement (webserviceurl, ratextblob, email, ratime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
         check = g.conn.execute("SELECT * FROM public.representativeannouncement AS ra WHERE ra.webserviceurl = %s, ra.ratextblob = %s,  ra.email = %s, ra.ratime = %s", [str(request.form['url']), str(request.form['announcement']), str(request.form['email']), now])
         if (check.rowcount > 0):
