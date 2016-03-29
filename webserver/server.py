@@ -43,7 +43,7 @@ def index():
 def sign_up():
     error = None
     suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
-    if (suCheck.rowcount() > 0):
+    if (suCheck.rowcount > 0):
         error = 'Email in use.'
     elif (request.form['password1'] != request.form['password2']):
         error = 'Passwords must match.'
