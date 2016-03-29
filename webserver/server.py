@@ -113,6 +113,7 @@ def login():
                 print "if"
                 error = 'Email in use.'
                 render_template('login.html', error=error)
+                print "after render"
             elif (request.form['password1'] != request.form['password2']):
                 print "elif"
                 error = 'Passwords must match.'
