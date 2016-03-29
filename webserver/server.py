@@ -110,9 +110,11 @@ def login():
             print "true"
             suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
             if (suCheck.rowcount > 0):
+                print "if"
                 error = 'Email in use.'
                 render_template('login.html', error=error)
             elif (request.form['password1'] != request.form['password2']):
+                print "elif"
                 error = 'Passwords must match.'
                 render_template('login.html', error=error)
             g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
@@ -154,7 +156,7 @@ if __name__ == "__main__":
   def run(debug, threaded, host, port):
     HOST, PORT = host, port
     print "running on %s:%d" % (HOST, PORT)
-    app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
+    app.run(host=HOST, port=PORT, debug=True, threaded=threaded)
 
 
   #app.run()
