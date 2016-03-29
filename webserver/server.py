@@ -123,7 +123,7 @@ def login():
                 print request.form['email']
                 print request.form['username']
                 print request.form['password1']
-                g.conn.execute("INSERT into public.webservicerepresentative (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
+                g.conn.execute("INSERT into public.serviceuser (email, username, password) values (%s, %s, %s)", request.form['email'], request.form['username'], request.form['password1']);
                 print "2"
                 session['logged_in'] = True
                 session['email'] = str(request.form['email'])
