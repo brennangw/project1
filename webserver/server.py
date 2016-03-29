@@ -39,13 +39,6 @@ def index():
   context = dict(data = urls)
   return render_template("index.html", **context)
 
-@app.route('/sign_up',methods=['POST'])
-def sign_up():
-
-
-
-
-
 @app.route('/webservice/<webserviceurl>')
 def webservice(webserviceurl):
     service_name = g.conn.execute("SELECT name FROM public.webservice AS ws WHERE ws.webserviceurl = %s ", [webserviceurl]).fetchone()[0]
