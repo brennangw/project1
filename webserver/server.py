@@ -85,7 +85,7 @@ def report(webserviceurl):
         print session['email']
         g.conn.execute("INSERT into public.report (reporttype, webserviceurl, reporttextblob, email, reporttime) values (%s, %s, %s, %s, %s)", [str(request.form['type']), str(request.form['url']), str(request.form['comment']), str(session['email']), now])
         flash('New entry was successfully posted')
-        return redirect('/report/'+webserviceurl)
+        return redirect('/webservice/'+webserviceurl)
     return render_template("report.html", **context)
 
 @app.route('/comment/<webserviceurl>', methods=['GET', 'POST'])
@@ -99,7 +99,7 @@ def comment(webserviceurl):
         print session['email']
         g.conn.execute("INSERT into public.serviceusercomment (webserviceurl, suctextblob, email, suctime) values (%s, %s, %s, %s)", [str(request.form['url']), str(request.form['comment_blob']), str(session['email']), now])
         flash('New entry was successfully posted')
-        return redirect('/comment/'+webserviceurl)
+        return redirect('/webservice/'+webserviceurl)
     return render_template("comment.html", **context)
 
 @app.route('/login', methods=['GET', 'POST'])
