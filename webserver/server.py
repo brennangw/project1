@@ -39,7 +39,7 @@ def index():
   context = dict(data = urls)
   return render_template("index.html", **context)
 
-@app.route('sign_up',methods=['POST'])
+@app.route('/sign_up',methods=['POST'])
 def sign_up():
     error = None
     suCheck = g.conn.execute("SELECT * FROM public.serviceuser AS su WHERE su.email = %s ", request.form['email'])
